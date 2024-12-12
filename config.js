@@ -10,7 +10,7 @@ export default defineUserConfig({
   // port: 9527, // 指定端口号为 8080
   bundler: viteBundler(),
   theme,
-  base: '/',
+  base: '/jm-blog/',
   // plugins: [googleAnalyticsPlugin({ id: 'G-TMXNCJR2K7' })],
   lang: 'zh-CN',
   locales: {
