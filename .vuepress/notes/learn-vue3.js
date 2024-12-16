@@ -10,6 +10,7 @@ export default definePlumeNotesItemConfig({
       collapsed: false,
       items: [
         'v-memo',
+        'defineAsyncComponent'
       ],
     }
   ],
