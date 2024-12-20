@@ -3,6 +3,8 @@ title: element-ui 整体样式修改记录贴
 author: 李嘉明
 createTime: 2024/11/22 16:30:30
 permalink: /article/kt9xn1ip/
+tags:
+  - element-ui
 ---
 
 ## 前言
