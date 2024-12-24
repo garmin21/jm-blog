@@ -11,7 +11,7 @@ tags:
 
 现有的 element-ui 的 有一些痛点，样式书写的不够健壮，使用起来也不够灵活，这次将在公司中，实际修改一套 老系统中 使用 element-ui 作为 UI 框架的记录贴
 
-整体设置 element-ui 的  `size: mini`
+整体设置 element-ui 的 `size: mini`
 
 ## 安装 node-sass
 
@@ -72,18 +72,17 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
 }
 ```
 
-## 强制 权重  element-ui 的样式
+## 强制 权重 element-ui 的样式
 
 创建一个 `important.css` 样式文件
 
-
 ```css
 .el-button.el-button--mini {
-	min-width: 88px !important;
+  min-width: 88px !important;
   height: 24px !important;
 }
 .el-button.el-button--small {
-	min-width: 88px !important;
+  min-width: 88px !important;
   height: 24px !important;
 }
 
@@ -99,7 +98,7 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
 /* 限制某个页面下的按钮的样式 */
 .backend .el-select,
 .releaseIndex .el-select,
-.frontIndex .el-select  {
+.frontIndex .el-select {
   margin-top: 5px !important;
 }
 
@@ -112,18 +111,18 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
 }
 
 .el-button--small {
-	padding: 6px 8px !important;
-	font-size: 12px !important;
-	border-radius: 3px !important;
+  padding: 6px 8px !important;
+  font-size: 12px !important;
+  border-radius: 3px !important;
 }
 .el-select {
-	max-width: 100px !important;
+  max-width: 100px !important;
 }
 .log .el-select .el-input__inner {
   border-color: rgba(49, 97, 255, 0.4) !important;
 }
 .log .el-select .el-input__inner::placeholder {
-  color: #3161FF !important;
+  color: #3161ff !important;
 }
 .el-message {
   top: 12px !important;
@@ -134,7 +133,7 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
 }
 
 .fe-cicd-select {
-	max-width: 500px !important;
+  max-width: 500px !important;
 }
 
 /* 图表 */
@@ -149,8 +148,8 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
 }
 
 /* 表格无数据显示图片 */
-.el-table__empty-block{
-  background-image: url("../images/none.svg") !important;
+.el-table__empty-block {
+  background-image: url('../images/none.svg') !important;
   background-repeat: no-repeat;
   background-position: center;
   width: 310px !important;
@@ -168,6 +167,30 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
 }
 
 .fe-cicd-body #nprogress .bar {
-  background: #3161FF !important;
+  background: #3161ff !important;
+}
+```
+
+## drawer 去除遮罩层
+
+```scss
+.custom-drawer {
+  top: calc(100vh - (100vh - 60px));
+  left: calc(100vw - 390px - 36px);
+  width: 390px;
+  padding-left: 36px;
+  .el-drawer {
+    width: 100% !important;
+    .el-drawer__header {
+      padding-right: 10px;
+      margin-bottom: 20px;
+    }
+    .el-drawer__header > :first-child {
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 16px;
+      color: #16181a;
+    }
+  }
 }
 ```

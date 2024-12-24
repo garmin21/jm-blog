@@ -34,6 +34,7 @@
     "Unchoose",
     "unobserve",
     "visibilitychange",
+    "vmin",
     "vnode",
     "vuex",
     "writeln"
