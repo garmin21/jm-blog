@@ -2,7 +2,7 @@
 title: 一文读懂 CSS 自定义滚动条
 author: 李嘉明
 tags:
-  - css
+  - CSS
 createTime: 2023/03/05 17:22:49
 permalink: /article/4ef5e74b/
 ---

@@ -4,7 +4,7 @@ createTime: 2018/08/18 08:43:02
 permalink: /article/fe5ruia1/
 author: 李嘉明
 tags:
-  - css
+  - CSS
 ---
 
 开发响应式网站时，常常需要使用到 media 媒体查询。这里总结下媒体查询的使用方法。

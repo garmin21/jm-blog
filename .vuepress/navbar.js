@@ -44,24 +44,6 @@ export default defineNavbarConfig([
     icon: 'icon-park-solid:bookshelf',
     items: [
       {
-        text: '网页三剑客',
-        icon: 'game-icons:spider-web',
-        items: [
-          {
-            text: 'JAVASCRIPT学习简记',
-            link: '/learn-js/',
-            activeMatch: '^/note/learn-js/',
-            icon: 'skill-icons:javascript',
-          },
-          {
-            text: 'CSS学习简记',
-            link: '/defensive-css/',
-            activeMatch: '^/note/defensive-css/',
-            icon: 'streamline:css-three',
-          }
-        ],
-      },
-      {
         text: '前端框架',
         icon: 'emojione-v1:frame-with-tiles',
         items: [

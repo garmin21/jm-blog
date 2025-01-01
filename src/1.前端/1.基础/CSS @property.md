@@ -3,7 +3,7 @@ title: 玩转 CSS @property
 author: 李嘉明
 createTime: 2023/11/17 02:20:24
 tags:
-  - css
+  - CSS
 permalink: /article/z7btimbk/
 ---
 
