@@ -2,7 +2,7 @@
 title: new操作符
 createTime: 2022/04/22 06:57:30
 author: 李嘉明
-permalink: /defensive-javascript/chnx193c/
+permalink: /learn-js/chnx193c/
 ---
 
 ::: tip 提问

@@ -2,7 +2,7 @@
 title: ES6 Class 类
 author: 李嘉明
 createTime: 2024/07/07 17:27:43
-permalink: /defensive-javascript/7omqypsu/
+permalink: /learn-js/7omqypsu/
 ---
 
 [阮一峰ES6文档](https://es6.ruanyifeng.com/#docs/class)

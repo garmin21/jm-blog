@@ -2,7 +2,7 @@
 title: ECMAScript 内置对象
 author: 李嘉明
 createTime: 2024/05/26 20:19:36
-permalink: /defensive-javascript/h63f8eca/
+permalink: /learn-js/h63f8eca/
 ---
 
 ### Boolean 对象

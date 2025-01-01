@@ -2,7 +2,7 @@
 title: JAVASCRIPT学习简记
 author: 李嘉明
 createTime: 2024/08/03 17:51:03
-permalink: /defensive-javascript/
+permalink: /learn-js/
 ---
 
 ## JavaScript简介
