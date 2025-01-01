@@ -221,7 +221,7 @@ Margin 塌陷 ，主要发生在垂直方向上，指的是 CSS 中块级�
 
 ```html
 <div class="outer">
-  <div class="wrapper">
+  <div class="margin-wrapper">
     <div class="inner"></div>
     <div class="inner"></div>
     <div class="inner"></div>
@@ -236,7 +236,7 @@ Margin 塌陷 ，主要发生在垂直方向上，指的是 CSS 中块级�
   height: 250px;
 }
 
-.wrapper {
+.margin-wrapper {
   width: 500px;
   overflow: hidden;
   margin-right: -26px;
@@ -258,7 +258,7 @@ Margin 塌陷 ，主要发生在垂直方向上，指的是 CSS 中块级�
   height: 250px;
 }
 
-.wrapper {
+.margin-wrapper {
   width: 500px;
   overflow: hidden;
   margin-right: -26px;
@@ -287,7 +287,7 @@ Margin 塌陷 ，主要发生在垂直方向上，指的是 CSS 中块级�
 
 :::demo-wrapper
 <div class="outer">
-  <div class="wrapper">
+  <div class="margin-wrapper">
     <div class="inner"></div>
     <div class="inner"></div>
     <div class="inner"></div>
