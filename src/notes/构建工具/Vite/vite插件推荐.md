@@ -2,7 +2,7 @@
 title: vite插件推荐
 author: 李嘉明
 createTime: 2023/01/10 02:45:06
-permalink: /article/8vac55c7/
+permalink: /learn-build/8vac55c7/
 ---
 
 ## Framework

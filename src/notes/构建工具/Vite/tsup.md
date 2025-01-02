@@ -1,11 +1,7 @@
 ---
 title: 基于 tsup 打包TypeScript
-date: '2023-04-06'
-categories:
-    - 工程化
-tags:
-    - 工程化
-publish: true
+createTime: 2025/01/02 10:04:21
+permalink: /learn-build/4qm59y6b/
 ---
 
 ## 前言

@@ -1,11 +1,7 @@
 ---
 title: 认识 unbuild 打包工具
-date: '2023-04-06'
-categories:
-    - 工程化
-tags:
-    - 工程化
-publish: true
+createTime: 2025/01/02 10:05:02
+permalink: /learn-build/s08h8jlt/
 ---
 
 ## 前言

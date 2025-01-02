@@ -36,7 +36,10 @@ export default definePlumeNotesItemConfig({
       collapsed: false,
       items: [
         '搭建vue3项目环境',
-        'import.meta.glob'
+        'import.meta.glob',
+        'vite插件推荐',
+        'tsup',
+        'unbuild'
       ],
     },
   ],
