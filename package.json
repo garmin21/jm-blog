@@ -7,7 +7,8 @@
     "dev": "jm-node-switch && vuepress dev src --config ./config.js",
     "build": "vuepress build src --config ./config.js",
     "deploy": "bash deploy.sh",
-    "push": "bash push.sh"
+    "push": "bash push.sh",
+    "release": "bumpp --commit --no-push --tag && npm publish"
   },
   "author": "jm-garming",
   "license": "ISC",
@@ -20,6 +21,7 @@
     "vuepress-theme-plume": "^1.0.0-rc.125"
   },
   "dependencies": {
-    "@vuepress/theme-default": "2.0.0-rc.68"
+    "@vuepress/theme-default": "2.0.0-rc.68",
+    "bumpp": "^9.9.2"
   }
 }

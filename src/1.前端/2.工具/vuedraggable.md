@@ -2,6 +2,8 @@
 title: vue draggable
 createTime: 2025/01/06 11:18:19
 permalink: /article/qaqhei3s/
+tags:
+  - 工具
 ---
 
 [Vue.Draggable](https://github.com/SortableJS/Vue.Draggable#readme)

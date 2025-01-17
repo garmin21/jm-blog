@@ -86,6 +86,9 @@ cancelAnimationFrame(id); // 用于取消 回调函数
 // requestIdleCallback() 主要用来在浏览器空闲时运行高耗时、低优先级的任务
 requestIdleCallback(callback, options)
 cancelIdleCallback(id)
+
+// 深度克隆 + 值转移 与 JSON 一样，不能克隆 函数，建议只克隆纯对象
+window.structuredClone()
 ```
 
 **requestAnimationFrame**
