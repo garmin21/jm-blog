@@ -175,6 +175,7 @@ permalink: /sites-collect/
 - [bestofjs](https://bestofjs.org/) - 前端开源项目最新热点趋势
 - [publint](https://publint.dev/) - 检查 npm package 是否正确发布
 - [Ray](https://www.ray.so/) - 代码 Demo 图片生成
+- [driver.js](https://driver.employleague.cn/guide/) - Driver.js是一个功能强大且高度可定制的基于原生JavaScript开发的新用户引导库
 
 ## 服务
 
