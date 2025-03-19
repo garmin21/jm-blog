@@ -17,9 +17,11 @@ export default definePlumeNotesItemConfig({
         '响应式系统',
         'vue核心概念',
         '路由',
+        'vueRouter原理',
         'render函数',
         '插槽',
-        '辅助函数'
+        '辅助函数',
+        'Vue.utils'
       ],
     },
     {
