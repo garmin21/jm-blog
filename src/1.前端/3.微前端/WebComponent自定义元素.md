@@ -65,8 +65,8 @@ customElements.define('my-tag', MyTag)
 
 在`customElements`的构造函数中，我们可以指定多个不同的回调函数，他们会在不同的声明周期被触发。
 
-- `connectedCallback`: 元素首次插入到文档 DOM 时回调；
-- `discannectedCallback`: 元素从文档 DOM 中删除时回调；
+- `connectedCallback`: 每当元素添加到文档中时调用。规范建议开发人员尽可能在此回调中实现自定义元素的设定，而不是在构造函数中实现。；
+- `disconnectedCallback`: 元素从文档 DOM 中删除时回调；
 - `attributeChangedCallback`： 元素增加、删除、修改自身属性时回调；
 - `adoptedCallback`：元素被移动到新的文档时回调；
 
