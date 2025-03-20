@@ -21,7 +21,8 @@ export default definePlumeNotesItemConfig({
         'render函数',
         '插槽',
         '辅助函数',
-        'Vue.utils'
+        'Vue.utils',
+        'vuex原理'
       ],
     },
     {
