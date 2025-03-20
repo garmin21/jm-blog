@@ -4,143 +4,94 @@ createTime: 2025/03/19 14:59:30
 permalink: /learn-vue/pcocn7ty/
 ---
 
-首先呢，VueRoute 是以一个 vue 插件的形式去安装的，所以一个基本的插件代码如下：
+
+vue-router 插件在 vue 中的使用
 
 ```js
-export default class newJmVueRouter {
-}
+// routes.js 文件
+import Vue from "vue";
+import VueRouter from "vue-router";
 
-newJmVueRouter.install = function (Vue, options) {
-  console.log(Vue, options);
-};
-```
+Vue.use(VueRouter);
 
-我们要做哪些事情？
-
-1. 初始化路由插件
-2. 创建两个组件 分别是 router-link , router-view
-3. 根据当前地址拦的路径，匹配对应的 组件，进行渲染到 router-view 上 展示
-4. 动态响应地址栏路径的变化，重新渲染 router-view 组件
-
-## 创建路由-初始化路由插件
-
-这里就是一个默认到写法，创建一个路由，暴露出去，并安装到 Vue 的构造函数中
-
-```js
-// routers.js
-
-import Vue from 'vue';
-import JmVueRouter from './jm-vue-router';
-
-Vue.use(JmVueRouter);
+// 定义 routes
 
 const routes = [
   {
-    name: 'home',
-    path: '/',
-    component: () => import(/* home */ './home.vue').then((v) => v.default),
+    name: "home",
+    path: "/",
+    component: () => import(/* home */ "./home.vue").then((v) => v.default),
   },
   {
-    name: 'about',
-    path: '/about',
-    component: () => import(/* about */ './about.vue').then((v) => v.default),
-    children: [
-      {
-        name: 'dome1',
-        path: '/about/dome1',
-        component: () =>
-          import(/* dome1 */ './dome1.vue').then((v) => v.default),
-      },
-    ],
-  },
-  {
-    name: 'test',
-    path: '/test',
-    component: {
-      render(h) {
-        return h('div', null, 'yellow');
-      },
-    },
+    name: "about",
+    path: "/about",
+    component: () => import(/* about */ "./about.vue").then((v) => v.default),
   },
 ];
 
-export default new JmVueRouter({
-  mode: 'hash',
+// 暴露出去
+
+export default new VueRouter({
+  mode: "hash",
   routes,
 });
+```
 
-/**
- * main.js
- */
+```js
+// main.js
 
-// import router from './routers.js'
+import Vue from "vue";
+import App from "./App.vue";
+
+import router from "./routes.js";
+
+Vue.config.productionTip = false;
 
 new Vue({
-  router,
-});
+  router, // 放置到vue 到options 里面去
+  render: (h) => h(App),
+}).$mount("#app");
 ```
 
-## 创建 router-link 组件等
+### 1. 通过上面的用法，揣测下原理
 
-我们已经完成了，插件的注册动作，接下里，完成两个自定义组件的开发, 目前仅支持 hash 方式
+1. vue.use() 是注册一个插件，那么久必须要 有 install 方法，这是 vue 官方内定的 , 不论你是 对象，还是 函数
+2. new VueRouter(options), 中会传入 routes 路由表， 最后将实例化的 router 对象 暴露出去
+3. 在根的 vue 实例上，传入 router
+
+### 2. 开始建造自己的 router
+
+1. 建立一个基本的插件基础
 
 ```js
-newJmVueRouter.install = function (Vue) {
-  ...
+let Vue = null; // 为什么要定义 变量去接收vue ,因为需要避免打包的时候，将 vue 也给进行打包进来
 
-  Vue.component('router-link', {
-    props: {
-      to: {
-        type: String,
-        required: true,
-      },
-      tag: {
-        type: String,
-        default: 'a',
-      },
-    },
-    render(h) {
-      return h(
-        this.tag,
-        { attrs: { href: '#' + this.to } },
-        this.$slots.default
-      );
-    },
-  });
+/**
+ * options ：
+ *  mode: 'hash // 路由模式
+ *  routes // 路由表
+ */
+function JmVueRouter(options) {
+  this.$options = options;
+}
 
-  Vue.component('router-view', {
-    // 1. 拿到当前 current hash 路径
-    // 2. 从路由表中找到对应的组件，渲染即可
-    // 3. current 变化了，需要再次执行当前这个render函数, 将对应的组件渲染
-    render(h) {
-      // const routers = this.$router.$options.routes || [];
-      // const current = this.$router.current || '/';
-      // const component = findComponent(routers, current);
-      return h('h1');
-    },
-  });
-
-  ...
+JmVueRouter.install = function (_Vue) {
+  Vue = _Vue; // 缓存vue 实例
 };
+
+export default JmVueRouter;
 ```
 
-可以看到我注释了 router-view 的 渲染动作，为啥？ 因为这个时候，我们无法获取到这样的数据 `this.$router.$options.routes`
+2. Vue.mixin 注入 this.$router
 
-### $router 对象 挂载到 vue 原型上
-
-我们无法获取，routers 就无法取渲染数据，我们这样去解决
+使用 Vue.mixin 给 vue 的原型上添加 $router 指向 router 对象，vue 的子组件，会默认继承这些属性，
+这也是你可以通哟 this.$router 去访问路由对象的原因
 
 ```js
-newJmVueRouter.install = function (Vue) {
-
-  // 定义一个缓存娶
-  const map = new Map()
-
-  ...
-
-  // mixin 会给所有的 组件 安装上并执行一遍默认的生命周期
+// install 在 vue.use 的时候就已经被调用了
+// beforeCreate 会在每一个组件被执行前置调用
+// mixin 会给所有的 组件 安装上并执行一遍默认的生命周期
   Vue.mixin({
-
     beforeCreate() {
       // 在这里。this ?
       // 每次执行的this 都代表一个实例对象，从根实例一直往下 找
@@ -149,81 +100,135 @@ newJmVueRouter.install = function (Vue) {
       }
     },
   });
-};
 ```
 
-![alt text](image.png)
+![alt text](./images/01.png)
 
 可以看到，`this.$options` 可以获取到 根 的 options 对象, 将其设置在 原型上即可
 
-### 继续完善 router-view
+3. 监听 url 变化，每次变跟，改变内部 的 current 值
 
 ```js
-...
+function JmVueRouter(options) {
+  this.$options = options;
 
-Vue.component('router-view', {
+  this.current = "/";
+
+  window.addEventListener("hashchange", () => {
+    this.current = window.location.hash.slice(1);
+  });
+}
+```
+
+4. 建立 router-link , router-view 组件
+
+```js
+Vue.component("router-link", {
+  props: {
+    to: {
+      type: String,
+      required: true,
+    },
+  },
+  render(h) {
+    return h("a", { attrs: { href: "#" + this.to } }, this.$slots.default);
+  },
+});
+
+Vue.component("router-view", {
+  render(h) {
+    return h(null);
+  },
+});
+```
+
+5. 可以看到我们的页面长这样子 ！
+
+![alt text](./images/02.png)
+
+6. 思考 🤔？ 我们只需要，在 current 值发送改变，也就是 hashchange 事件执行后，去将 router-view 渲染的组件进行替换即可完成
+
+   - 1. routes 路由表，从当前组件实例上的 $router.$options 上去拿到我们的路由表数组
+   - 2. current 当前 current 从组件实例的 $router 上拿到
+   - 3. 遍历路由表，将 component 找到，并通过 h 函数渲染
+
+```js
+Vue.component("router-view", {
   // 1. 拿到当前 current hash 路径
   // 2. 从路由表中找到对应的组件，渲染即可
   // 3. current 变化了，需要再次执行当前这个render函数, 将对应的组件渲染
   render(h) {
     const routers = this.$router.$options.routes || [];
-    const current = this.$router.current || '/';
-    const component = findComponent(routers, current);
-    return h(component);
+    const current = this.$router.current || "/";
+    const route = routers.find((item) => item.path === current) || null;
+    return h(route.component);
   },
 });
-
-
-function findComponent (routers, current) {
-    if(!routers.length || !current) return;
-
-    let component = null;
-
-    if(map.get(current)) {
-        return map.get(current)
-    }
-
-    for (let index = 0; index < routers.length; index++) {
-        const item = routers[index];
-        if(current === item.path) {
-            map.set(item.path, item.component);
-            return item.component;
-        }
-        if(item.children && item.children.length) {
-            component =  findComponent(item.children, current)
-        }
-    }
-
-    return component;
-}
-
-...
 ```
 
-这个时候，正常显示 路径 为 / 的 组件是可以成功的
+7. 组件渲染成功，发现切换路由，组件并没有，按需渲染
 
-### 动态渲染 route-view
-
-1. 获取到地址栏 # 后面的路径
-2. 绑定事件监听地址栏发生变更，重新设置 当前的路径
+原因是因为，this.$router.current 的值，改变了，其他地方根本拿不到最新的值，所以，就需要，双向数据绑定 这个数据,
+将 current 转变为一个响应式数据
 
 ```js
-export default class newJmVueRouter {
-  current = '/'
-  constructor() {
-    this.$options = options;
+function JmVueRouter(options) {
+  this.$options = options;
 
-    // 获取地址栏 # 为结尾的路径
-    const initValue = window.location.hash.slice(1) || '/';
-    // 将 current 转变为一个响应式数据
-    Vue.util.defineReactive(this, 'current', initValue);
-    // 监听 hashchange 事件 一旦发生变更，重新设置 current
-    window.addEventListener('hashchange', () => {
-      this.current = window.location.hash.slice(1);
-    });
-  }
+  // this.current = '/';
+
+  const initValue = window.location.hash.slice(1) || "/";
+  // 将 current 转变为一个响应式数据
+  Vue.util.defineReactive(this, "current", initValue);
+
+  window.addEventListener("hashchange", () => {
+    this.current = window.location.hash.slice(1);
+  });
 }
+```
 
+8. Vue.util.defineReactive 是 vue 提供的将一个数据转变为响应式数据的工具方法
+
+```js
+Vue.util.defineReactive();
+```
+
+9. 完成 ✅，引发思考，如果路由表里面 有 children 属性该如何 处理？
+
+1. 一开始的想法是，想把整个 routes 拉平成一维的，没有想到怎么写。(不失为一个想法)
+1. 我的解决办法就是，使用递归，并且给递归加缓存
+
+```js
+let map = new Map();
+
+function findComponent(routers, current) {
+  if (!routers.length || !current) return;
+
+  // 声明一个component， 将来是一个组件
+  let component = null;
+  // 缓存中读取
+  if (map.get(current)) {
+    console.log("拿到了缓存");
+    return map.get(current);
+  }
+
+  console.log("这个组件没有缓存");
+  // 没有被缓存，遍历
+  for (let index = 0; index < routers.length; index++) {
+    const item = routers[index];
+    // 找到了，设置缓存，并直接返回
+    if (current === item.path) {
+      map.set(item.path, item.component);
+      return item.component;
+    }
+    // 有 children 属性，再次递归查找
+    if (item.children && item.children.length) {
+      component = findComponent(item.children, current);
+    }
+  }
+  // 返回 组件函数
+  return component;
+}
 ```
 
 
