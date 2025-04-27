@@ -2,7 +2,9 @@
 title: v-memo
 author: 李嘉明
 createTime: 2024/09/08 18:56:27
-permalink: /learn-vue3/clr9tdko/
+permalink: /article/clr9tdko/
+tags:
+  - vue3
 ---
 
 Vue3 中的 `v-memo` 是一种高效的**优化组件重渲染**的指令。它可以阻止组件元素在没有必要的情况下进行重新渲染，从而提高应用程序的性能。

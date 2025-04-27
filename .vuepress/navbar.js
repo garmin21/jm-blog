@@ -48,7 +48,7 @@ export default defineNavbarConfig([
         icon: 'emojione-v1:frame-with-tiles',
         items: [
           {
-            text: 'vue2学习简记',
+            text: 'vue学习简记',
             link: '/learn-vue/',
             activeMatch: '^/note/learn-vue/',
             icon: 'logos:vue',
@@ -58,12 +58,6 @@ export default defineNavbarConfig([
             link: '/learn-react/',
             activeMatch: '^/note/learn-react/',
             icon: 'skill-icons:react-dark',
-          },
-          {
-            text: 'vue3学习简记',
-            link: '/learn-vue3/',
-            activeMatch: '^/note/learn-vue3/',
-            icon: 'logos:vue',
           },
         ],
       },

@@ -2,7 +2,9 @@
 title: defineAsyncComponent
 author: 李嘉明
 createTime: 2024/09/08 18:56:27
-permalink: /learn-vue3/clr9tdki/
+permalink: /article/clr9tdki/
+tags:
+  - vue3
 ---
 
 defineAsyncComponent 是 Vue 3 提供的一个用于**异步加载组件**的功能，它允许我们在需要时才去加载某个组件，而不是一开始就把所有组件都加载到页面中。这样可以有效地**减少首屏加载时间**尤其是当项目中组件数量庞大时，异步加载组件可以极大提高应用的[性能]

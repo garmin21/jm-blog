@@ -2,7 +2,9 @@
 title: extends
 author: 李嘉明
 createTime: 2024/12/25 21:49:45
-permalink: /learn-vue3/axh2p9lq/
+permalink: /article/axh2p9lq/
+tags:
+  - vue3
 ---
 
 [](https://cn.vuejs.org/api/options-composition.html#extends)
