@@ -2,13 +2,13 @@ import { defineNavbarConfig } from 'vuepress-theme-plume'
 
 export default defineNavbarConfig([
   { text: '首页', link: '/', icon: 'material-symbols:home' },
+  // { text: '小课堂',  link: '/projects/', activeMatch: '^/(projects)/', icon: 'mdi:google-classroom'},
   {
     text: '博客',
     link: '/blog/',
     activeMatch: '^/(blog|article)/',
     icon: 'material-symbols:menu-book',
   },
-  // { text: 'Projects', link: '/projects/', icon: 'ri:open-source-fill' },
   {
     text: '技术文档',
     icon: 'mdi:idea',

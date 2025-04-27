@@ -16,7 +16,7 @@ export default plumeTheme({
     description: '世间的美好总是不期而遇',
     circle: true,
     location: '深圳，中国',
-    organization: '跨越速递',
+    organization: '。。。',
   },
   social: [{ icon: 'github', link: 'https://github.com/garmin21' }],
   editLinkText: '在 GitHub 上编辑此页',
