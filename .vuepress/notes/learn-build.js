@@ -17,9 +17,9 @@ export default {
         'webpack快速入门教程',
         'require',
         'umd模块',
-        'webpackHmr',
         'webpack性能优化',
         'webpack优化',
+        'webpack模块热替换',
       ],
     },
     {
