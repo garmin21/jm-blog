@@ -2,6 +2,9 @@
 title: vue3中深入原理-setup中直接使用异步会有什么问题？
 createTime: 2025/05/17 19:48:43
 permalink: /article/xo2vpq2v/
+author: 李嘉明
+tags:
+  - 小课堂
 ---
 
 
