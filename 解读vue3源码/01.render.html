@@ -1,0 +1,63 @@
+<script src="https://unpkg.com/vue@next"></script>
+<style>
+    .mr-4{
+        margin-left: 10px;
+    }
+</style>
+<div id="app"></div>
+
+<script>
+    const { h, createApp} = Vue;
+
+
+    const Stack = {
+        props: {
+            size: Number
+        },
+        render() {
+            const slot = this.$slots.default 
+            ? this.$slots.default()
+            : []
+
+            return h('div', {class: 'stack'},
+            slot.map(child => {
+                return h('div', {class: `mr-${this.$props.size}`}, [ child ])
+            }))
+        }
+    }
+
+    createApp({
+        components: {
+            Stack
+        },
+        template: `
+            <Stack size="4">
+                <div>hello</div> 
+                <Stack size="4">
+                    <div>hello</div> 
+                    <div>hello</div> 
+                        <Stack size="4">
+                            <div>hello</div> 
+                            <div>hello</div> 
+                            <div>hello</div> 
+                            <div>hello</div> 
+                                <Stack size="4">
+                                    <div>hello</div> 
+                                    <div>hello</div> 
+                                    <div>hello</div> 
+                                </Stack>
+                        </Stack>
+                </Stack>
+            </Stack>
+        `
+    }).mount('#app')
+
+</script>
+
+<!-- 
+总结：
+
+1. h 函数的使用和编写
+2. template 最终会被编译为 h 函数的结果，考虑 vite-jsx-plugin 插件是如何做到，编译转换的
+3. vue3 中获取 slots 是使用 这种方式获取 this.$slots.default()， 但是 setup 没有 this, 但是 slots 通过 setup 的第二个参数，给出
+ -->

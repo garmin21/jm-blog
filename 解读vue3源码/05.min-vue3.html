@@ -1,0 +1,195 @@
+<div id="app"></div>
+
+<script>
+    // render
+    function h(tag, props, children) {
+        return {
+            tag,
+            props,
+            children
+        }
+    }
+
+    function mount(vnode, container) {
+        const el = vnode.el =  document.createElement(vnode.tag);
+        // props
+        if(vnode.props) {
+            for (const key in vnode.props) {
+                const value = vnode.props[key];
+                if(key.startsWith('on')) { // 处理事件处理程序
+                    el.addEventListener(key.slice(2).toLowerCase(), value, false)
+                } else {
+                    el.setAttribute(key, value)
+                }
+            }
+        }
+        // children
+        if(vnode.children) {
+            if(typeof vnode.children === 'string') {
+                el.textContent = vnode.children;
+            } else {
+                vnode.children.forEach(child => {
+                    mount(child, el)
+                })
+            }
+        }
+        container.appendChild(el)
+    }
+
+    function patch(n1, n2) {
+        if(n1.tag === n2.tag) {
+            const el = n2.el = n1.el;
+        // props
+            const oldProps = n1.props || {};
+            const newProps = n2.props || {};
+            // 元素的节点属性存在，只是 值有所变更
+            for (const key in newProps) {
+                const oldValue = oldProps[key];
+                const newValue = newProps[key];
+                if(oldValue !== newValue) {
+                    // 替换为最新的值
+                    el.setAttribute(key, newValue)
+                }
+            }
+            // 新的元素节点，某个属性已经不存在，需要删除
+            for (const key in oldProps) {
+                if(!(key in newProps)) {
+                    el.removeAttribute(key)
+                }
+            }
+        // children
+            const oldChildren = n1.children || [];
+            const newChildren = n2.children || [];
+            // 假设子节点都是文本,
+            if(typeof newChildren === 'string') {
+                if(typeof oldChildren === 'string') {
+                    if(newChildren !== oldChildren) {
+                        el.textContent = newChildren;
+                    }
+                } else {
+                    // 如何 newChildren 是其他的内容，将最新的内容，直接覆盖整个的内容
+                    el.textContent = newChildren;
+                }
+            } else {
+                // 假设 newChildren 不是一个string，oldChildren 是一个string的话
+                if(typeof oldChildren === 'string') {
+                    el.innerHTML = '';
+                    newChildren.forEach(child => {
+                        mount(child, el)
+                    })
+                } else { // 假如 newChildren,oldChildren 都不是文本，都是 array 的情况
+                    // 更新公共的部分
+                    const commonLength = Math.min(oldChildren.length, newChildren.length);
+                    for (let key = 0; key < commonLength; key++) {
+                        patch(oldChildren[key], newChildren[key])
+                    }
+                    // 假设 newChildren 比 oldChildren 长, 把多出来的进行一次挂载
+                    if(newChildren.length > oldChildren.length) {
+                        newChildren.slice(oldChildren.length).forEach(child => {
+                            mount(child, el)
+                        })
+                    } else if(newChildren.length < oldChildren.length) {
+                        oldChildren.slice(newChildren.length).forEach(child => {
+                            el.removeChild(child)
+                        })
+                    }
+                }
+            }
+            
+        }
+        
+    }
+
+    // reactive
+    let activeEffect;
+
+    class Dep {
+        subscribers  = new Set()
+
+        depend() {
+            if(activeEffect) {
+                this.subscribers.add(activeEffect)
+            }
+        }
+
+        notify() {
+            this.subscribers.forEach(effect => effect())
+        }
+
+    }
+
+    function watchEffect(effect) {
+        activeEffect = effect;
+        effect();
+        activeEffect = null;
+    }
+
+    const targetMap = new WeakMap()
+
+
+    function getDep(target, key) {
+        let depMap = targetMap.get(target)
+        if(!depMap) {
+            depMap = new Map();
+            targetMap.set(target, depMap)
+        }
+        let dep = depMap.get(key);
+        if(!dep) {
+            dep = new Dep();
+            depMap.set(key, dep)
+        }
+        return dep
+    }
+
+    const reactiveHandles = {
+        get(target, key, receiver) { // 取值触发陷阱
+            let dep = getDep(target, key)
+            dep.depend()
+            return Reflect.get(target, key, receiver)
+        },
+        set(target, key, value, receiver){ // 设置值触发陷阱
+            let dep = getDep(target, key)
+            const result = Reflect.set(target, key, value, receiver)
+            dep.notify()
+            return result;
+        },
+        // ...  
+        has() {}, // count in state 触发陷阱
+        ownKeys(){} // for in state 触发陷阱
+    }
+
+    function reactive(raw) {
+        return new Proxy(raw, reactiveHandles)
+    }
+
+
+    const App = {
+        data: reactive({ count: 0 }),
+        render() {
+            return h('div', { class: 'red'}, [
+                h('div', null, `${this.data.count}`),
+                h('button', { onClick: function handel(){App.data.count++} }, 'Click')
+            ]);
+        }
+    }
+
+    function createApp(component, container) {
+        let isMounted = false;
+        let prevVdom;
+        watchEffect(() => {
+            if(!isMounted) {
+                prevVdom = component.render();
+                mount(prevVdom, container);
+                isMounted = true;
+            } else {
+                newVdom = component.render();
+                patch(prevVdom, newVdom)
+                prevVdom = newVdom;
+            }
+        })
+    }
+
+
+    createApp(App, document.getElementById('app'))
+
+</script>

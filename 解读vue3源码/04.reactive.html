@@ -1,0 +1,80 @@
+
+<script>
+
+let activeEffect;
+
+class Dep {
+    subscribers  = new Set()
+
+    depend() {
+        if(activeEffect) {
+            this.subscribers.add(activeEffect)
+        }
+    }
+
+    notify() {
+        this.subscribers.forEach(effect => effect())
+    }
+
+}
+
+function watchEffect(effect) {
+    activeEffect = effect;
+    effect();
+    activeEffect = null;
+}
+
+const targetMap = new WeakMap()
+
+
+function getDep(target, key) {
+    let depMap = targetMap.get(target)
+    if(!depMap) {
+        depMap = new Map();
+        targetMap.set(target, depMap)
+    }
+    let dep = depMap.get(key);
+    if(!dep) {
+        dep = new Dep();
+        depMap.set(key, dep)
+    }
+    return dep
+}
+
+const reactiveHandles = {
+    get(target, key, receiver) { // 取值触发陷阱
+        let dep = getDep(target, key)
+        dep.depend()
+        return Reflect.get(target, key, receiver)
+    },
+    set(target, key, value, receiver){ // 设置值触发陷阱
+        let dep = getDep(target, key)
+        const result = Reflect.set(target, key, value, receiver)
+        dep.notify()
+        return result;
+    },
+    // ...  
+    has() {}, // count in state 触发陷阱
+    ownKeys(){} // for in state 触发陷阱
+}
+
+// 代理数组，往数组里添加一项，会导致arr.length 加一，继而隐式的触发 get set 陷阱
+
+function reactive(raw) {
+    return new Proxy(raw, reactiveHandles)
+}
+
+
+// reactive
+const state = reactive({
+    count: 0
+}) // 0
+
+
+watchEffect(() => {
+    console.log(state.count)
+})
+
+state.count++ // 1
+
+</script>
