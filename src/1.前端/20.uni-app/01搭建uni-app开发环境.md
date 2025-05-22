@@ -31,3 +31,25 @@ npm run dev:mp-weixin
 
 
 我们每次改动，终端都会监听编译为最新的代码，无论你是通过小程序开发者工具 打开的 还是 直接通过浏览器运行 h5 都能实时看到效果
+
+
+
+
+### vsode 中 开发 uni-app
+
+
+1. 安装插件
+2. ts 类型校验
+3. json 注释问题
+
+![alt text](image-2.png)
+
+
+### uni-app 中的 拦截器
+
+![alt text](image-3.png)
+
+
+### uni-app 安全区域
+
+![alt text](image-4.png)
