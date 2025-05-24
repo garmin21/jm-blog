@@ -53,3 +53,20 @@ npm run dev:mp-weixin
 ### uni-app 安全区域
 
 ![alt text](image-4.png)
+
+
+### uni-app 自定义导航
+
+小程序/app 状态栏高度
+- uni.getSystemInfo().statusBarHeight
+
+小程序/app 胶囊菜单按钮的布局信息
+
+- uni.getMenuButtonBoundingClientRect()
+  - top 是胶囊按钮上边到顶部的距离
+  - bottom 是胶囊按钮下边到顶部的距离
+  - height 胶囊按钮的高度
+
+胶囊按钮上下两边都有 一定的间距，可以使用  `top - 小程序状态栏的高度 = 间距高度` . `间距高度 * 2 + height = 胶囊菜单按钮的布局信息高度`
+
+自定义导航栏 定位 填充区域的高度 = 状态栏高度 + 胶囊菜单按钮的布局信息高度
