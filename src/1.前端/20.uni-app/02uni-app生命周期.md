@@ -23,6 +23,10 @@ tags:
 
 2. onMounted === onReady
 
+  - **使用uni-app开发的应用`onLoad || onMounted || onReady`只会触发一次，不管你是打开的微信小程序还是H5**
+    - 怀疑原因是组件在应用中根本就没有卸载，每次切换实际都在同一个页面
+
+
 
 ## 组件生命周期
 

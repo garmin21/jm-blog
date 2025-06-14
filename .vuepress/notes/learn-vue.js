@@ -14,6 +14,7 @@ export default definePlumeNotesItemConfig({
       dir: '基础入门',
       collapsed: false,
       items: [
+        '$attrs-$listeners',
         '响应式系统',
         'vue核心概念',
         '路由',
