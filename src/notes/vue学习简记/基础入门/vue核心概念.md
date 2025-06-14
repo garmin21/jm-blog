@@ -395,55 +395,6 @@ this.$emit('func',123)
 子组件调用父组件的方法，实现向父组件传递数据
 ```
 
-### ⑦ $listeners / $attrs
-
-1. 一般来说往子组件通过`props`的方式传递数据时，都需要显示的`props:['msg']`进行定义
-2. `$sttrs解释为`: 父组件往子组件传没有在`props`里声明过的值时，子组件可以通过`$attrs`接受，且只包含父组件没有在`props`里声明的值。
-3. 通常我们如果需要从父组件接收传递很多个值，那么我们就需要在 `props` 里声明需要接受的值，如果孙子组件也需要，那么就又要重复在`props`中声明，显得非常繁琐。
-4. `$listeners`与`$attrs`的用法比较类似
-5. 组件内未被注册的属性将作为`普通html元素属性`被渲染 ,所以为了避免不必要的重复代码, 在 Vue2.4.0,可以在组件定义中添加`inheritAttrs：false ` 组件将不会把未被注册的 props 呈现为普通的 HTML 属性 ,我们仍然可以通过`$attrs`去访问到组件传递过来的数据
-
-```html
-<!-- $attrs 父组件向后辈组件传递数据 App组件: -->
-<template>
-  <a :msg="msg" :desc="desc" />
-</template>
-
-<!-- A组件: 此时A组件可以通过 this.$attrs 拿到传递过来的数据 -->
-<template>
-  <b v-bind="$attrs" />
-</template>
-
-<!-- B组件：此时在B组件中就可以通过this.$attrs 拿到A组件传递过来的数据 -->
-<template>
-  <C v-bind="$attrs" />
-</template>
-
-<!-- C组件: 也能拿到组件传递过来的数据 -->
-<template>
-  <C />
-</template>
-```
-
-```html
-<!-- $listeners 后辈组件向父组件传递数据 App组件: -->
-<template>
-  <a :msg="msg" :desc="desc" @fucn="chang" />
-</template>
-
-<!-- A组件: -->
-<template>
-  <b v-on="$listeners" />
-</template>
-
-<!-- B组件: 在B组件中打印this.$listeners 会得到一个对象，对象里面有对应的事件 -->
-<template>
-  <b v-on="$listeners" />
-</template>
-
-<!-- 通过 this.$emit('fucn',123) 去发射数据 -->
-```
-
 ### eventHub
 
 > 在我们 `mian.js`文件中挂载`new Vue`中的配置对象中，data 属性中的数据，是可以被子孙组件通过`this.$root.属性名`访问的
