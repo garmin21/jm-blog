@@ -24,7 +24,6 @@ export default defineClientConfig({
       'background: #000; font-size: 18px; font-family: monospace',
       'background: #000; font-size: 18px; font-family: monospace; color: #ddd; text-shadow:0 0 2px #fff'
     )
-
     router.beforeEach((to) => {
       console.log('before navigation', to, app, router, siteData)
     })
