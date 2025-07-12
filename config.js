@@ -2,6 +2,7 @@ import { viteBundler } from '@vuepress/bundler-vite';
 import { getDirname, path } from 'vuepress/utils';
 import theme from './.vuepress/theme';
 import { defineUserConfig } from 'vuepress';
+// import {createHtmlPlugin} from 'vite-plugin-html'
 const __dirname = getDirname(import.meta.url)
 function googleAnalyticsPlugin() {
   return {
@@ -51,9 +52,24 @@ export default defineUserConfig({
         content: 'X5YSaTDn-pKqQBUKD_05_dQcxVItzEq7Rlbg2ZEU7AM',
       },
     ],
-  ],
-  plugins: [
-    googleAnalyticsPlugin()
+    [
+      'script',
+      {
+        src: 'https://www.googletagmanager.com/gtag/js?id=G-LYDB5TTVMB',
+        async: true
+      }
+    ],
+    [
+      'script',
+      {},
+      `
+       window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-LYDB5TTVMB');
+      `
+    ]
   ],
   // title: '你好， VuePress ！',
   // description: '这是我的第一个 VuePress 站点',
