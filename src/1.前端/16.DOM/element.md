@@ -217,14 +217,17 @@ ul.addEventListener( 'click ', function(event){
         console. log(event.target.innerHTML)
     }
 });
+
+Element.scrollIntoView(); //让元素自身滚动 进入浏览器的可见区域，仅支持元素自身的调用
+Element/window.scrollTo() //让 滚动条滚动到给定元素的指定坐标位置，针对的是滚动条，所以支持 windows/ 滚动容器自身
+
 ```
 
 ### 其他
 
 ```js
-Element.scrollIntoView(); //滚动当前元素，进入浏览器的可见区域
 //解析HTML字符串，然后将生成的节点插入DOM树的指定位置。
-Element.insertAdjacentHTML(where, htmlString);
+// Element.insertAdjacentHTML(where, htmlString);
 Element.insertAdjacentHTML('beforeBegin', htmlString); //在该元素前插入
 Element.insertAdjacentHTML('afterBegin', htmlString); //在该元素第一个子元素前插入
 Element.insertAdjacentHTML('beforeEnd ', htmlString); //在该元素最后一个子元素后面插入

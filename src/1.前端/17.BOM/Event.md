@@ -246,6 +246,7 @@ event.detail; //firefox的用法 3表示向下滚动  -3表示向上滚动
 
 ```js
 scroll; // 内容发生滚动  绑定给有滚动条的元素或者window
+scrollend; // 滚动结束触发事件
 resize; // 视口大小发生变化  绑定给window
 pageshow; // 页面显示触发事件，包括了后退/前进按钮操作，同时也会在onload 事件触发后初始化页面时触发
 // 只读属性: persisted 表示网页是否是来自缓存.
